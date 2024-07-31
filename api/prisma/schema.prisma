@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Contractor {
+  id String @unique
+  name String
+  email String?
+  phone String
+  events_held Event[]
+  is_commerce Boolean @default(false)
+
+  @@map("contractors")
+}
+
+model Requestor {
+  id String @unique
+  name String
+  email String @unique
+  instagram String
+  is_follower Boolean @default(false)
+  requested_musics MusicRequest[]
+  contacts Contact[]
+
+  @@map("requestors")
+}
+
+model Event {
+  id String @unique
+  name String
+  contractor Contractor @relation(fields: [contractor_id], references: [id])
+  contractor_id String
+  date DateTime
+  folder_url String?
+  description String
+  photos EventPhoto[]
+  requested_musics MusicRequest[]
+  is_private Boolean @default(false)
+
+  @@map("events")
+}
+
+model EventPhoto {
+  id String @unique
+  event Event @relation(fields: [event_id], references: [id])
+  event_id String
+  photo_url String
+
+  @@map("event_photos")
+}
+
+model MusicRequest {
+  id String @unique
+  requestor_id String
+  requestor Requestor @relation(fields: [requestor_id], references: [id])
+  event_id String
+  event Event @relation(fields: [event_id], references: [id])
+  music_name String
+
+  @@map("music_requests")
+}
+
+model Contact {
+  id String @unique
+  requestor_id String
+  requestor Requestor @relation(fields: [requestor_id], references: [id])
+  message String
+
+  @@map("contacts")
+}
