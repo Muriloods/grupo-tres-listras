@@ -1,5 +1,5 @@
-import { MusicRequest } from "../../../entities/MusicRequest";
-import { Contact } from "../../../entities/Contact";
+import { MusicRequest } from "../../entities/MusicRequest";
+import { Contact } from "../../entities/Contact";
 
 export interface DTO {
   id: string | null;

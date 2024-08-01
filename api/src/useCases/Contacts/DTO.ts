@@ -1,4 +1,4 @@
-import { DTO as RequestorDTO } from "../Requestors/Create/DTO"
+import { DTO as RequestorDTO } from "../Requestors/DTO"
 export interface DTO {
   id: string,
   requestor: RequestorDTO;

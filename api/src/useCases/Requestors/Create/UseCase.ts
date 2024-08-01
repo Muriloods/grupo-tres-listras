@@ -1,5 +1,5 @@
 import { IRequestorsRepository } from "../../../repostitories/Requestors/IRequestorsRepository";
-import { DTO } from "./DTO";
+import { DTO } from "../DTO";
 import { Requestor } from "../../../entities/Requestor";
 
 export class UseCase {

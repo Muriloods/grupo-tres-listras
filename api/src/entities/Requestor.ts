@@ -1,7 +1,7 @@
 import { v4 } from "uuid";
 import { MusicRequest } from "./MusicRequest";
 import { Contact } from "./Contact";
-import { DTO } from "../useCases/Requestors/Create/DTO";
+import { DTO } from "../useCases/Requestors/DTO";
 
 export class Requestor {
   public readonly id: string;
