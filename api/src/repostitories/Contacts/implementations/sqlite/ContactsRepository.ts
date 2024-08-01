@@ -41,8 +41,4 @@ export class ContactsRepository implements IContactsRepository{
 
     return created;
   }
-  //
-  // async find(id: string): Promise<Contact> {
-  //
-  // }
 }

@@ -35,9 +35,4 @@ export class RequestorsRepository implements IRequestorsRepository{
   findByEmail(email: string): Promise<any> {
     return prisma.requestor.findUnique({ where: { email } });
   }
-
-  //
-  // async find(id: string): Promise<Requestor> {
-  //
-  // }
 }

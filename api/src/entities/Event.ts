@@ -5,15 +5,15 @@ import { MusicRequest } from "./MusicRequest";
 import { DTO } from "../useCases/Events/Create/DTO";
 
 export class Event {
-  public readonly id: string;
+  public readonly id: string | null;
   public name: string;
-  public contractor: Contractor;
+  public contractor: Contractor | null;
   public date: Date;
   public folder_url: string;
   public description: string;
-  public photos: EventPhoto[];
+  public photos: EventPhoto[] | null;
   public is_private: boolean;
-  public requested_musics: MusicRequest[]
+  public requested_musics: MusicRequest[] | null
 
   constructor(props: DTO) {
     Object.assign(this, props)

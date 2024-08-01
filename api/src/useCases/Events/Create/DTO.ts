@@ -1,17 +1,17 @@
 import { Contractor } from "../../../entities/Contractor";
 import { EventPhoto } from "../../../entities/EventPhoto";
 import { DTO as MusicRequestDTO } from "../../MusicRequests/Create/DTO";
-import { DTO as ContractorDTO} from "../../Contractors/Create/DTO";
+import { DTO as ContractorDTO} from "../../Contractors/DTO";
 import { DTO as EventPhotoDTO} from "../../EventPhoto/Create/DTO";
 
 export interface DTO {
   id: string | null,
   name: string;
-  contractor: ContractorDTO;
+  contractor: ContractorDTO | null;
   date: Date;
   folder_url: string;
   description: string;
-  photos: EventPhotoDTO[];
+  photos: EventPhotoDTO[] | null;
   is_private: boolean;
-  requested_musics: MusicRequestDTO[]
+  requested_musics: MusicRequestDTO[] | null
 }

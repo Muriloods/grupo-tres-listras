@@ -1,4 +1,4 @@
-import { DTO as ContractorDTO } from "../../Contractors/Create/DTO";
+import { DTO as ContractorDTO } from "../../Contractors/DTO";
 import { EventPhoto } from "../../../entities/EventPhoto";
 import { DTO as EventDTO } from "../../Events/Create/DTO";
 

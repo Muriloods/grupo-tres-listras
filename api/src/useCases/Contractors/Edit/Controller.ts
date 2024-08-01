@@ -1,7 +1,5 @@
 import { UseCase } from "./UseCase";
 import { Request, Response } from "express";
-import { Contractor } from "../../../entities/Contractor";
-import { DTO as EventsDTO } from "../../Events/Create/DTO";
 
 export class Controller {
   constructor(
@@ -11,7 +9,7 @@ export class Controller {
   async handle(request: Request, response: Response) {
     const { name, email, phone, is_commerce } = request.body;
     const cont = {
-      id: null,
+      id: request.params.id,
       name: name,
       email: email,
       phone: phone,
