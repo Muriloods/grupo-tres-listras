@@ -1,5 +1,5 @@
 import { DTO as RequestorDTO } from "../../Requestors/DTO"
-import { DTO as EventDTO } from "../../Events/Create/DTO";
+import { DTO as EventDTO } from "../../Events/DTO";
 
 export interface DTO {
   id: string | null;

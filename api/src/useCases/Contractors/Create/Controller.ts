@@ -1,7 +1,7 @@
 import { UseCase } from "./UseCase";
 import { Request, Response } from "express";
 import { Contractor } from "../../../entities/Contractor";
-import { DTO as EventsDTO } from "../../Events/Create/DTO";
+import { DTO as EventsDTO } from "../../Events/DTO";
 
 export class Controller {
   constructor(

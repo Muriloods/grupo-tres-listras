@@ -1,4 +1,4 @@
-import { DTO as EventsDTO } from "../Events/Create/DTO"
+import { DTO as EventsDTO } from "../Events/DTO"
 import { Event } from "../../entities/Event";
 export interface DTO {
   id: string | null;
