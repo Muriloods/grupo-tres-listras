@@ -5,6 +5,9 @@ import { uploadMiddleware } from "./storage";
 import { createContactController } from "./useCases/Contacts/Create";
 import { listCntactsController } from "./useCases/Contacts/List";
 
+//user
+import { createUsersUseCaseController } from "./useCases/Users/Create";
+
 //contrator
 import { createContractorController } from "./useCases/Contractors/Create";
 import { listContractorsController } from "./useCases/Contractors/List";
@@ -22,13 +25,24 @@ import { editEventsUseCaseController} from "./useCases/Events/Edit";
 //music-request
 import { createMusicRequestController } from "./useCases/MusicRequests/Create";
 import { findMusicRequestsByEventIdController } from "./useCases/MusicRequests/FindByEventId";
+import { authenticateController } from "./useCases/Auth/Authenticate";
+import { authMiddleware } from "./middlewares/authMiddleware";
 
 const router = Router();
 
 router.route('/contact')
   .post((req, res) => {
     return createContactController.handle(req, res);
+  });
+
+router.route('/event/:eventId/music-request')
+  .post((req, res) => {
+    return createMusicRequestController.handle(req, res);
   })
+
+
+router.use(authMiddleware);
+router.route('/contact')
   .get((req, res) => {
     return listCntactsController.handle(req, res);
   });
@@ -76,12 +90,20 @@ router.route('/event/:id')
   })
 
 //music-request
-router.route('/event/:eventId/music-request')
-  .post((req, res) => {
-    return createMusicRequestController.handle(req, res);
-  })
-  .get((req, res) => {
+router.route('/event/:eventId/music-request').get((req, res) => {
     return findMusicRequestsByEventIdController.handle(req, res);
   });
+
+//user
+router.route('/user')
+  .post((req, res) => {
+    return createUsersUseCaseController.handle(req, res);
+  })
+
+//auth
+router.route('/auth')
+  .post((req, res) => {
+    return authenticateController.handle(req, res);
+  })
 
 export default router;

@@ -80,3 +80,11 @@ model Contact {
 
   @@map("contacts")
 }
+
+model User {
+  id String @unique
+  email String @unique
+  name String
+  password String @unique
+  @@map("users")
+}
