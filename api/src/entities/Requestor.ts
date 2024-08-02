@@ -5,9 +5,9 @@ import { DTO } from "../useCases/Requestors/DTO";
 
 export class Requestor {
   public readonly id: string;
-  public name: string;
-  public email: string;
-  public instagram: string;
+  public name: string | null;
+  public email: string | null;
+  public instagram: string | null;
   public requested_musics: MusicRequest[] | null;
   public is_follower: boolean;
   public contacts: Contact[] | null;

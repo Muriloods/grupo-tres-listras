@@ -9,7 +9,7 @@ export class RequestorsRepository implements IRequestorsRepository{
   }
 
   async save(requestor: Requestor): Promise<any> {
-    const req = prisma.requestor.create({
+    return prisma.requestor.create({
       data: {
         id: requestor.id,
         name: requestor.name,
@@ -17,22 +17,23 @@ export class RequestorsRepository implements IRequestorsRepository{
         instagram: requestor.instagram,
         is_follower: requestor.is_follower
       }
-    })
-    return req;
+    });
   }
 
   edit(requestor: Requestor): Promise<any> {
-    const req = prisma.requestor.updateMany({
+    return prisma.requestor.updateMany({
       where: {
         id: requestor.id
       },
-      data: {...requestor}
+      data: { ...requestor }
     });
-
-    return req;
   }
 
   findByEmail(email: string): Promise<any> {
     return prisma.requestor.findUnique({ where: { email } });
+  }
+
+  findByInstagram(instagram: string): Promise<any> {
+    return prisma.requestor.findUnique({ where: { instagram } });
   }
 }

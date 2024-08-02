@@ -26,9 +26,9 @@ model Contractor {
 
 model Requestor {
   id String @unique
-  name String
-  email String @unique
-  instagram String
+  name String?
+  email String? @unique
+  instagram String? @unique
   is_follower Boolean @default(false)
   requested_musics MusicRequest[]
   contacts Contact[]
@@ -67,6 +67,7 @@ model MusicRequest {
   event_id String
   event Event @relation(fields: [event_id], references: [id])
   music_name String
+  dedication String?
 
   @@map("music_requests")
 }

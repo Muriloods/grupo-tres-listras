@@ -1,4 +1,4 @@
-import { DTO as MusicRequestDTO } from "../MusicRequests/Create/DTO";
+import { DTO as MusicRequestDTO } from "../MusicRequests/DTO";
 import { DTO as ContractorDTO} from "../Contractors/DTO";
 import { DTO as EventPhotoDTO} from "../EventPhoto/DTO";
 

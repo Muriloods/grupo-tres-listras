@@ -9,7 +9,12 @@ export class UseCase {
 
   async execute(data: DTO): Promise<Requestor> {
     const requestor = new Requestor(data);
-    const existingRequestor = await this.requestorsRepository.findByEmail(requestor.email)
+    let existingRequestor: Requestor | null = null;
+    if (!requestor.instagram) {
+      existingRequestor = await this.requestorsRepository.findByEmail(requestor.email)
+    } else if (!requestor.email) {
+      existingRequestor = await this.requestorsRepository.findByInstagram(requestor.instagram)
+    }
     if (existingRequestor) {
       existingRequestor.name = requestor.name;
       existingRequestor.email = requestor.email;

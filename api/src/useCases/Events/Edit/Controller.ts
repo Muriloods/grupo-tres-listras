@@ -1,5 +1,6 @@
 import { UseCase } from "./UseCase";
 import { UseCase as EventPhotosUseCase } from "../../EventPhoto/Create/UseCase"
+import { UseCase as DeleteEentPhotosByEventUseCase } from "../../EventPhoto/DeleteByEvent/UseCase"
 import { UseCase as FindEventsUseCase } from "../../Events/Find/UseCase"
 import { Request, Response } from "express";
 
@@ -7,14 +8,15 @@ export class Controller {
   constructor(
     private useCase: UseCase,
     private findEventUseCase: FindEventsUseCase,
-    private eventPhotosUseCase: EventPhotosUseCase
+    private eventPhotosUseCase: EventPhotosUseCase,
+    private deleteEntPhotosByEventUseCase: DeleteEentPhotosByEventUseCase
   ) {}
 
   async handle(request: Request, response: Response) {
     const { name, contractor_id, date, description, is_private } = request.body;
 
     const evt = {
-      id: null,
+      id: request.params.id,
       name: name,
       contractor_id: contractor_id,
       date: new Date(date),
@@ -38,6 +40,7 @@ export class Controller {
           event_id: ev.id
         }
       })
+      await this.deleteEntPhotosByEventUseCase.execute(ev.id)
       await this.eventPhotosUseCase.execute(photos);
       const event = await this.findEventUseCase.execute(ev.id)
       return response.status(201).send(event);

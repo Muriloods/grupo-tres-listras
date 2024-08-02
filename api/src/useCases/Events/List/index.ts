@@ -4,7 +4,7 @@ import { EventsRepository } from "../../../repostitories/Events/implementations/
 
 const repository = new EventsRepository()
 
-const findEventsUseCase = new UseCase(repository);
-const findEventsController = new Controller(findEventsUseCase);
+const listEventsUseCase = new UseCase(repository);
+const listEventsController = new Controller(listEventsUseCase);
 
-export { findEventsUseCase, findEventsController };
+export { listEventsUseCase, listEventsController };

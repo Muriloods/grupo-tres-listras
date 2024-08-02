@@ -14,6 +14,14 @@ import { editContractorsController } from "./useCases/Contractors/Edit";
 
 //events
 import { createEventsUseCaseController } from "./useCases/Events/Create";
+import { findEventsController } from "./useCases/Events/Find";
+import { listEventsController } from "./useCases/Events/List";
+import { deleteEventsController } from "./useCases/Events/Delete";
+import { editEventsUseCaseController} from "./useCases/Events/Edit";
+
+//music-request
+import { createMusicRequestController } from "./useCases/MusicRequests/Create";
+import { findMusicRequestsByEventIdController } from "./useCases/MusicRequests/FindByEventId";
 
 const router = Router();
 
@@ -47,10 +55,33 @@ router.route('/contractor/:id')
 
 
 //events
-
 router.post("/event", uploadMiddleware.fields([{ name: 'folder', maxCount: 1 }, { name: 'images'}]), (req, res) => {
-  //return res.send(req.files);
   return createEventsUseCaseController.handle(req, res);
 })
+
+router.put("/event/:id", uploadMiddleware.fields([{ name: 'folder', maxCount: 1 }, { name: 'images'}]), (req, res) => {
+  return editEventsUseCaseController.handle(req, res);
+})
+
+router.get("/event", (req, res) => {
+  return listEventsController.handle(req, res);
+})
+
+router.route('/event/:id')
+  .get( (req, res) => {
+    return findEventsController.handle(req, res);
+  })
+  .delete((req, res) => {
+    return deleteEventsController.handle(req, res);
+  })
+
+//music-request
+router.route('/event/:eventId/music-request')
+  .post((req, res) => {
+    return createMusicRequestController.handle(req, res);
+  })
+  .get((req, res) => {
+    return findMusicRequestsByEventIdController.handle(req, res);
+  });
 
 export default router;

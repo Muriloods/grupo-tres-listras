@@ -14,7 +14,9 @@ export class EventPhotoRepository implements IEventPhotosRepository{
     const cont = await prisma.eventPhoto.createMany({ data })
   }
 
-  async deleteAll(): Promise<void> {
-    await prisma.eventPhoto.deleteMany();
+  async deleteByEventId(eventId:string): Promise<void> {
+    await prisma.eventPhoto.deleteMany({
+      where: { event_id: eventId }
+    });
   }
 }

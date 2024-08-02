@@ -10,26 +10,29 @@ export class Controller {
   ) {}
 
   async handle(request: Request, response: Response) {
-    const { name, email, message } = request.body;
+    const { name, instagram, is_follower, music_name, event_id, dedication } = request.body;
     const req = new Requestor({
       id: null,
-      name: name,
-      email: email,
-      instagram: null,
-      is_follower: false,
+      name: !name ? null : name,
+      email: null,
+      instagram: instagram,
+      is_follower: is_follower,
       requested_musics: null,
       contacts: null
     });
 
     try {
       const createdRequestor = await this.createRequestorUseCase.execute(req);
-      const contact = await this.useCase.execute({
+      const musicRequest = await this.useCase.execute({
         id: null,
+        requestor: null,
         requestor_id: createdRequestor.id,
-        requestor: createdRequestor,
-        message: message
+        event: null,
+        event_id: request.params.eventId,
+        music_name: music_name,
+        dedication: !dedication ? null : dedication
       });
-      return response.status(201).send(contact);
+      return response.status(201).send(musicRequest);
     } catch (err) {
       return response.status(400).json({
         message: err.message || "Unexpected error."

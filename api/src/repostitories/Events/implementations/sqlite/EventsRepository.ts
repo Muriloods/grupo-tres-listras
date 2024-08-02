@@ -1,23 +1,31 @@
 import { IEventsRepository } from "../../IEventsRepository";
 import { Event } from "../../../../entities/Event";
 import prisma from "../../../../../prisma/client";
-import { EventPhoto } from "../../../../entities/EventPhoto";
+
 export class EventsRepository implements IEventsRepository{
 
   async list(): Promise<Event[]> {
-    // return (await prisma.event.findMany({ include: { events_held: true } })).map(ctt => {
-    //   return new Event({
-    //     ...ctt,
-    //     events_held: ctt.events_held.map(ev => {
-    //       return {
-    //         ...ev,
-    //         event: null,
-    //         requested_musics: null,
-    //         photos: null
-    //       }
-    //     })
-    //   })
-    // });
+    return (await prisma.event.findMany({
+      include: {
+        photos: true,
+        contractor: true
+      }
+    })).map(res => {
+      return new Event({
+        ...res,
+        photos: res.photos.map(photo => {
+          return {
+            ...photo,
+            event: null
+          }
+        }),
+        requested_musics: null,
+        contractor: {
+          ...res.contractor,
+          events_held: null
+        }
+      })
+    });
   }
 
   async save(event: Event): Promise<Event> {
@@ -62,7 +70,7 @@ export class EventsRepository implements IEventsRepository{
   }
 
   async delete(id: string): Promise<Event> {
-    const evt = this.find(id)
+    const evt = await this.find(id)
     await prisma.event.delete({
       where: { id: id }
     });
@@ -70,18 +78,20 @@ export class EventsRepository implements IEventsRepository{
   }
 
   async edit(event: Event): Promise<Event> {
-    // await prisma.event.updateMany({
-    //   where: {
-    //     id: event.id
-    //   },
-    //   data: {
-    //     name: event.name,
-    //     email: event.email,
-    //     phone: event.phone,
-    //     is_commerce: event.is_commerce
-    //   }
-    // });
-    //
-    // return event;
+    await prisma.event.updateMany({
+      where: {
+        id: event.id
+      },
+      data: {
+        name: event.name,
+        contractor_id: event.contractor_id,
+        date: event.date,
+        folder_url: event.folder_url,
+        description: event.description,
+        is_private: event.is_private
+      }
+    });
+
+    return await this.find(event.id);
   }
 }
