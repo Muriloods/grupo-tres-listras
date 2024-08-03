@@ -7,5 +7,4 @@ const repository = new UsersRepository()
 const authenticateUseCase = new UseCase(repository);
 const authenticateController = new Controller(authenticateUseCase);
 
-
 export { authenticateUseCase, authenticateController };

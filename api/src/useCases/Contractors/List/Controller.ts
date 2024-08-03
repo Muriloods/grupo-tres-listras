@@ -7,13 +7,7 @@ export class Controller {
   ) {}
 
   async handle(request: Request, response: Response) {
-    try {
-      const contractors = await this.useCase.execute();
-      return response.status(201).send(contractors);
-    } catch (err) {
-      return response.status(400).json({
-        message: err.message || "Unexpected error."
-      })
-    }
+    const contractors = await this.useCase.execute();
+    return response.send(contractors);
   }
 }

@@ -9,14 +9,8 @@ export class Controller {
   ) {}
 
   async handle(request: Request, response: Response) {
-    try {
-      await this.deleteEventPhotosByEventeUseCase.execute(request.params.id);
-      const event = await this.useCase.execute(request.params.id);
-      return response.status(201).send(event);
-    } catch (err) {
-      return response.status(400).json({
-        message: err.message || "Unexpected error."
-      })
-    }
+    await this.deleteEventPhotosByEventeUseCase.execute(request.params.id);
+    const event = await this.useCase.execute(request.params.id);
+    return response.send(event);
   }
 }

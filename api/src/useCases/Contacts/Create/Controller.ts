@@ -2,6 +2,7 @@ import { UseCase } from "./UseCase";
 import { UseCase as CreateRequestorUseCase } from "../../Requestors/Create/UseCase";
 import { Requestor } from "../../../entities/Requestor";
 import { Request, Response } from "express";
+import { UnauthorizedError } from "../../../helpers/api-errors";
 
 export class Controller {
   constructor(
@@ -21,19 +22,13 @@ export class Controller {
       contacts: null
     });
 
-    try {
-      const createdRequestor = await this.createRequestorUseCase.execute(req);
-      const contact = await this.useCase.execute({
-        id: null,
-        requestor_id: createdRequestor.id,
-        requestor: createdRequestor,
-        message: message
-      });
-      return response.status(201).send(contact);
-    } catch (err) {
-      return response.status(400).json({
-        message: err.message || "Unexpected error."
-      })
-    }
+    const createdRequestor = await this.createRequestorUseCase.execute(req);
+    const contact = await this.useCase.execute({
+      id: null,
+      requestor_id: createdRequestor.id,
+      requestor: createdRequestor,
+      message: message
+    });
+    return response.send(contact);
   }
 }

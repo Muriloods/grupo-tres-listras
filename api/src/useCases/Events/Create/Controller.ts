@@ -27,24 +27,18 @@ export class Controller {
       requested_musics: null
     }
 
-    try {
-      const ev = await this.useCase.execute(evt);
-      // @ts-ignore
-      const photos = request.files.images.map(function (photo) {
-        return {
-          id: null,
-          photo_url: photo.path,
-          event: null,
-          event_id: ev.id
-        }
-      })
-      await this.eventPhotosUseCase.execute(photos);
-      const event = await this.findEventUseCase.execute(ev.id)
-      return response.status(201).send(event);
-    } catch (err) {
-      return response.status(400).json({
-        message: err.message || "Unexpected error."
-      })
-    }
+    const ev = await this.useCase.execute(evt);
+    // @ts-ignore
+    const photos = request.files.images.map(function (photo) {
+      return {
+        id: null,
+        photo_url: photo.path,
+        event: null,
+        event_id: ev.id
+      }
+    })
+    await this.eventPhotosUseCase.execute(photos);
+    const event = await this.findEventUseCase.execute(ev.id)
+    return response.send(event);
   }
 }

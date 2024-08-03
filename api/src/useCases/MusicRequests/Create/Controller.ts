@@ -21,22 +21,16 @@ export class Controller {
       contacts: null
     });
 
-    try {
-      const createdRequestor = await this.createRequestorUseCase.execute(req);
-      const musicRequest = await this.useCase.execute({
-        id: null,
-        requestor: null,
-        requestor_id: createdRequestor.id,
-        event: null,
-        event_id: request.params.eventId,
-        music_name: music_name,
-        dedication: !dedication ? null : dedication
-      });
-      return response.status(201).send(musicRequest);
-    } catch (err) {
-      return response.status(400).json({
-        message: err.message || "Unexpected error."
-      })
-    }
+    const createdRequestor = await this.createRequestorUseCase.execute(req);
+    const musicRequest = await this.useCase.execute({
+      id: null,
+      requestor: null,
+      requestor_id: createdRequestor.id,
+      event: null,
+      event_id: request.params.eventId,
+      music_name: music_name,
+      dedication: !dedication ? null : dedication
+    });
+    return response.send(musicRequest);
   }
 }

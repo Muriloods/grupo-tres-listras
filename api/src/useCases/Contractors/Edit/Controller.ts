@@ -17,13 +17,7 @@ export class Controller {
       events_held: null
     }
 
-    try {
-      const contractor = await this.useCase.execute(cont);
-      return response.status(201).send(contractor);
-    } catch (err) {
-      return response.status(400).json({
-        message: err.message || "Unexpected error."
-      })
-    }
+    const contractor = await this.useCase.execute(cont);
+    return response.send(contractor);
   }
 }

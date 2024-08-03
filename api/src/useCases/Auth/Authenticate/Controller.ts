@@ -7,17 +7,11 @@ export class Controller {
   ) {}
 
   async handle(request: Request, response: Response) {
-    const { name, email, password } = request.body;
-    try {
+    const { email, password } = request.body;
       const user = await this.useCase.execute({
         email: email,
         password: password
       });
-      return response.status(201).send(user);
-    } catch (err) {
-      return response.status(400).json({
-        message: err.message || "Unexpected error."
-      })
-    }
+      return response.send(user);
   }
 }
